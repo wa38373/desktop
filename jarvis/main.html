@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Desktop App</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Image at the top -->
+        <img src="dp.jpg" alt="Center Image">
+        
+        <!-- Sidebar Section -->
+        <div class="sidebar">
+            <button id="toggle-sidebar" class="sidebar-toggle-btn">></button>
+            <ul>
+                <li><button onclick="navigateTo('home.html')" class="sidebar-item">Home</button></li>
+                <li><button onclick="navigateTo('settings.html')" class="sidebar-item">Settings</button></li>
+                <li><button onclick="navigateTo('about.html')" class="sidebar-item">About</button></li>
+            </ul>
+        </div>
+        
+        
+        
+        <!-- Jarvis Start Button -->
+        <div>
+            <button id="start-jarvis" class="animated-button">Start Jarvis</button>
+        </div>
+        
+        <!-- Apps Section -->
+        <div>
+            <h1>APPS</h1>
+        </div>
+        
+        <div class="add-app-box" id="add-app-box">
+            <span>+</span>
+        </div>
+        <div class="launch-buttons" id="launch-buttons">
+            <!-- Dynamic App Buttons will appear here -->
+        </div>
+    </div>
+    
+    <script src="rendered.js"></script>
+</body>
+</html>
