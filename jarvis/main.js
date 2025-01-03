@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const { exec } = require('child_process');
+const path = require('path');
 
 let mainWindow;
 
@@ -10,18 +11,27 @@ app.on('ready', () => {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false, // Allow communication between main and renderer
+            preload: path.join(__dirname, 'preload.js'), // Preload script
         },
     });
 
-    mainWindow.loadFile('main.html');
+    mainWindow.loadFile('main.html'); // Load the initial HTML file
     mainWindow.removeMenu(); // Remove the default menu
 });
 
 // Handle "start-jarvis" request from renderer process
 ipcMain.on('start-jarvis', () => {
-    exec('python jarvis_ai.py', (error, stdout, stderr) => {
+    // Get the full path to jarvis.py
+    const scriptPath = path.join(__dirname, 'jarvis.py'); // Correct path to your Python script
+
+    // Execute the Python script
+    exec(`python "${scriptPath}"`, (error, stdout, stderr) => {
         if (error) {
             console.error(`Error starting Jarvis: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`stderr: ${stderr}`);
             return;
         }
         console.log(`Jarvis Output: ${stdout}`);
@@ -41,4 +51,9 @@ ipcMain.handle('select-app', async () => {
     return null;
 });
 
-
+// Close the app when all windows are closed
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
